@@ -1,95 +1,134 @@
+import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:movie_app/data/vos/collection_vo.dart';
 import 'package:movie_app/data/vos/genre_vo.dart';
 import 'package:movie_app/data/vos/production_company_vo.dart';
 import 'package:movie_app/data/vos/production_country_vo.dart';
 import 'package:movie_app/data/vos/spoken_language_vo.dart';
+
+import '../../persistence/hive_constants.dart';
 part 'movie_vo.g.dart';
 
 @JsonSerializable()
+@HiveType(typeId: HIVE_TYPE_ID_MOVIE_VO,adapterName: "MovieVOAdapter")
 class MovieVO{
   @JsonKey(name: "adult")
+  @HiveField(0)
    bool? adult;
 
   @JsonKey(name: "backdrop_path")
+  @HiveField(1)
    String? backDropPath;
 
   @JsonKey(name: "belongs_to_collection")
+  @HiveField(2)
   CollectionVO? belongsToCollection;
 
   @JsonKey(name: "budget")
+  @HiveField(3)
   double? budget;
 
   @JsonKey(name: "genres")
+  @HiveField(4)
   List<GenreVO>? genres;
 
   @JsonKey(name: "homepage")
+  @HiveField(5)
   String? homePage;
 
   @JsonKey(name: "genre_ids")
+  @HiveField(6)
    List<int>? genreIds;
 
   @JsonKey(name: "id")
+  @HiveField(7)
    int? id;
 
   @JsonKey(name: "imdb_id")
+  @HiveField(8)
   String? imdbId;
 
   @JsonKey(name: "media_type")
+  @HiveField(9)
   String? mediaType;
 
   @JsonKey(name: "original_language")
+  @HiveField(10)
    String? originalLanguage;
 
   @JsonKey(name: "original_title")
+  @HiveField(11)
    String? originalTitle;
 
   @JsonKey(name: "overview")
+  @HiveField(12)
    String? overview;
 
   @JsonKey(name: "popularity")
+  @HiveField(13)
    double? popularity;
 
   @JsonKey(name: "poster_path")
+  @HiveField(14)
    String? posterPath;
 
   @JsonKey(name: "production_companies")
+  @HiveField(15)
   List<ProductionCompanyVO>? productionCompanies;
 
   @JsonKey(name: "production_countries")
+  @HiveField(16)
   List<ProductionCountryVO>? productionCountries;
 
   @JsonKey(name: "release_date")
+  @HiveField(17)
    String? releaseDate;
 
   @JsonKey(name: "revenue")
+  @HiveField(18)
   int? revenue;
 
   @JsonKey(name: "runtime")
+  @HiveField(19)
   int? runtime;
 
   @JsonKey(name: "spoken_languages")
+  @HiveField(20)
   List<SpokenLanguageVO>? spokenLanguages;
 
   @JsonKey(name: "status")
+  @HiveField(21)
   String? status;
 
   @JsonKey(name: "tagline")
+  @HiveField(22)
   String? tagline;
 
 
   @JsonKey(name: "title")
+  @HiveField(23)
    String? title;
 
   @JsonKey(name: "video")
+  @HiveField(24)
    bool? video;
 
   @JsonKey(name: "vote_average")
+  @HiveField(25)
    double? voteAverage;
 
   @JsonKey(name: "vote_count")
+  @HiveField(26)
    int? voteCount;
 
+  @HiveField(27)
+  bool? isNowPlaying;
+
+  @HiveField(28)
+  bool? isPopular;
+
+  @HiveField(29)
+  bool? isTopRated;
 
   MovieVO(
       this.adult,
@@ -118,7 +157,10 @@ class MovieVO{
       this.title,
       this.video,
       this.voteAverage,
-      this.voteCount);
+      this.voteCount,
+      this.isNowPlaying,
+      this.isPopular,
+      this.isTopRated);
 
   factory MovieVO.fromJson(Map<String,dynamic> json)=>_$MovieVOFromJson(json);//Casting data from network with json format to Vos
 

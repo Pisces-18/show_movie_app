@@ -13,6 +13,9 @@ GetCreditsByMovieResponse _$GetCreditsByMovieResponseFromJson(
       (json['cast'] as List<dynamic>?)
           ?.map((e) => CreditVO.fromJson(e as Map<String, dynamic>))
           .toList(),
+      (json['crew'] as List<dynamic>?)
+          ?.map((e) => CreditVO.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$GetCreditsByMovieResponseToJson(
@@ -20,4 +23,5 @@ Map<String, dynamic> _$GetCreditsByMovieResponseToJson(
     <String, dynamic>{
       'id': instance.id,
       'cast': instance.cast,
+      'crew': instance.crew,
     };

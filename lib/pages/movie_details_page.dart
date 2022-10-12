@@ -31,23 +31,38 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
   @override
   void initState() {
     super.initState();
-    mMovieModel.getMovieDetails(widget.movieId).then((movie) {
+    ///Movie Details Network
+    mMovieModel.getMovieDetails(widget.movieId)?.then((movie) {
       setState(() {
         mMovie = movie;
       });
     });
 
-    mMovieModel.getCreditsByMovie(widget.movieId).then((creditsList) {
+    ///Movie Details Database
+    mMovieModel.getMovieDetailsFromDatabase(widget.movieId).then((movie) {
+      setState((){
+        mMovie=movie;
+      });
+    }).catchError((error){
+      debugPrint("Movie Details Database Error ===> $error");
+    });
+
+    mMovieModel.getActorsByMovie(widget.movieId)?.then((actorList) {
       setState(() {
-        mActorsList =
-            creditsList.where((credit) => credit.isActor()).toList();
-        mCreatorsList =
-            creditsList.where((credit) => credit.isCreator()).toList();
-        debugPrint(mActorsList?.cast()[0].toString());
+        mActorsList =actorList;
       });
     }).catchError((error) {
       debugPrint("Credit Error===>$error");
     });
+
+    mMovieModel.getCreatorsByMovie(widget.movieId)?.then((creatorList) {
+      setState(() {
+        mCreatorsList =creatorList;
+      });
+    }).catchError((error) {
+      debugPrint("Credit Error===>$error");
+    });
+
   }
 
   @override
@@ -280,7 +295,7 @@ class MovieDetailsScreenButtonView extends StatelessWidget {
               title,
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: TEXT_REGULAR_2X,
+                fontSize: TEXT_REGULAR,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -484,6 +499,7 @@ class MovieDetailsAppBarInfoView extends StatelessWidget {
                 const SizedBox(width: MARGIN_MEDIUM),
                 Text(
                   "${mMovie?.voteAverage}",
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: MOVIE_DETAILS_RATING_TEXT_SIZE,

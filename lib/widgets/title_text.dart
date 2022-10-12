@@ -9,6 +9,7 @@ class TitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      overflow: TextOverflow.ellipsis,
       style: const TextStyle(
         color: HOME_SCREEN_LIST_TITLE_COLOR,
         fontSize: TEXT_REGULAR,

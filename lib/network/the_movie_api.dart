@@ -8,7 +8,6 @@ import 'package:movie_app/network/responses/get_now_playing_movies_response.dart
 import 'package:movie_app/network/responses/movie_list_response.dart';
 import 'package:retrofit/http.dart';
 
-import '../data/vos/movie_details_vo.dart';
 import '../data/vos/movie_vo.dart';
 
 part 'the_movie_api.g.dart';

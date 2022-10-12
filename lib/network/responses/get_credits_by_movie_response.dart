@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:movie_app/data/vos/actor_vo.dart';
 
 import '../../data/vos/credit_vo.dart';
 
@@ -11,7 +12,10 @@ class GetCreditsByMovieResponse{
   @JsonKey(name: "cast")
    List<CreditVO>? cast;
 
-  GetCreditsByMovieResponse(this.id, this.cast);
+  @JsonKey(name: "crew")
+  List<CreditVO>? crew;
+
+  GetCreditsByMovieResponse(this.id, this.cast,this.crew);
 
   factory GetCreditsByMovieResponse.fromJson(Map<String,dynamic> json)=>_$GetCreditsByMovieResponseFromJson(json);//Casting data from network with json format to Vos
 

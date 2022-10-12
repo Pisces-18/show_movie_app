@@ -36,6 +36,7 @@ class MovieView extends StatelessWidget {
               mMovie?.title?? "",
               textAlign: TextAlign.start,
               style: const TextStyle(
+                overflow: TextOverflow.ellipsis,
                 color: Colors.white,
                 fontSize: TEXT_REGULAR_2X,
                 fontWeight: FontWeight.w600,

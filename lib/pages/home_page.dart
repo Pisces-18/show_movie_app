@@ -38,8 +38,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    ///Now Playing Movies
-    mMovieModel.getNowPlayingMovies(1).then((movieList) {
+    ///Now Playing Movies Network
+    mMovieModel.getNowPlayingMovies(1)?.then((movieList) {
       setState(() {
         mNowPlayingMovieList = movieList;
       });
@@ -47,17 +47,36 @@ class _HomePageState extends State<HomePage> {
       debugPrint(error.toString());
     });
 
-    ///Popular Movies
-    mMovieModel.getPopularMovies(1).then((movieLst) {
+    ///Now Playing Movies Database
+    mMovieModel.getNowPlayingMoviesFromDatabase().then((movieList) {
+      setState((){
+        mNowPlayingMovieList=movieList;
+      });
+    }).catchError((error){
+      debugPrint("Now Playing Database Error ===> $error");
+    });
+
+    ///Popular Movies Network
+    mMovieModel.getPopularMovies(1)?.then((movieLst) {
       setState(() {
         mPopularMovies = movieLst;
+
       });
     }).catchError((error) {
       debugPrint(error.toString());
     });
 
-    ///Genres
-    mMovieModel.getGenres().then((genreList) {
+    ///Popular Movies Database
+    mMovieModel.getPopularMoviesFromDatabase().then((movieList) {
+      setState((){
+        mPopularMovies=movieList;
+      });
+    }).catchError((error){
+      debugPrint("Popular Movies Database Error ===> $error");
+    });
+
+    ///Genres Network
+    mMovieModel.getGenres()?.then((genreList) {
       setState(() {
         mGenreList = genreList;
 
@@ -68,23 +87,54 @@ class _HomePageState extends State<HomePage> {
       debugPrint(error.toString());
     });
 
-    ///Showcases
-    mMovieModel.getTopRatedMovies(1).then((movieList) {
+    ///Genres Database
+    mMovieModel.getGenresFromDatabase().then((genreList) {
+      setState((){
+        mGenreList=genreList;
+        _getMoviesByGenreAndRefresh(genreList.first.id?? 0);
+      });
+    }).catchError((error){
+      debugPrint("Genres Database Error ===> $error");
+    });
+
+    ///Showcases Network
+    mMovieModel.getTopRatedMovies(1)?.then((movieList) {
       setState(() => mShowCaseMovieList = movieList);
     }).catchError((error) {
       debugPrint(error.toString());
     });
 
-    ///Actors
-    mMovieModel.getActors(1).then((actorList) {
+    ///Showcases Database
+    mMovieModel.getTopRatedMoviesFromDatabase().then((movieList) {
+      setState((){
+        mShowCaseMovieList=movieList;
+      });
+    }).catchError((error){
+      debugPrint("ShowCases Database Error ===> $error");
+    });
+
+    ///Actors Network
+    mMovieModel.getActors(1)?.then((actorList) {
       setState(() => mActors = actorList);
     }).catchError((error) {
       debugPrint(error.toString());
     });
+
+    ///Actors Database
+    mMovieModel.getAllActorsFromDatabase().then((actorList){
+      setState((){
+        mActors=actorList;
+      });
+    }).catchError((error){
+      debugPrint("Actors Database Error ===> $error");
+    });
   }
 
+
+
+
   void _getMoviesByGenreAndRefresh(int genreId) {
-    mMovieModel.getMoviesByGenre(genreId).then((moviesByGenre) {
+    mMovieModel.getMoviesByGenre(genreId)?.then((moviesByGenre) {
       setState(() => mMoviesByGenreList = moviesByGenre);
     }).catchError((error) {
       debugPrint(error.toString());
@@ -156,6 +206,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+
     );
   }
 
@@ -194,7 +245,7 @@ class GenreSectionView extends StatelessWidget {
             length: genreList?.length?? 0,
             child: TabBar(
               onTap: (index){
-                onTapGenre(genreList??[][index].id?? 0);
+                onTapGenre(genreList?[index].id?? 0);
               },
               isScrollable: true,
               indicatorColor: PLAY_BUTTN_COLOR,

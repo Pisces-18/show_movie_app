@@ -1,57 +1,84 @@
+import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:movie_app/data/vos/base_actor_vo.dart';
+
+import '../../persistence/hive_constants.dart';
 
 part 'credit_vo.g.dart';
 
 @JsonSerializable()
+@HiveType(typeId: HIVE_TYPE_ID_CREDIT_VO,adapterName: "CreditVOAdapter")
 class CreditVO extends BaseActorVO {
   @JsonKey(name: "adult")
-   bool? adult;
+  @HiveField(0)
+  bool? adult;
 
   @JsonKey(name: "gender")
-   int? gender;
+  @HiveField(1)
+  int? gender;
 
   @JsonKey(name: "id")
-   int? id;
+  @HiveField(2)
+  int? id;
 
   @JsonKey(name: "known_for_department")
-   String? knownForDepartment;
+  @HiveField(3)
+  String? knownForDepartment;
 
-  // @JsonKey(name: "name")
-  // late String name;
+  // @JsonKey(name:"name")
+  // String? name;
 
   @JsonKey(name: "original_name")
-   String? originalName;
+  @HiveField(4)
+  String? originalName;
 
   @JsonKey(name: "popularity")
-   double? popularity;
+  @HiveField(5)
+  double? popularity;
 
-  // @JsonKey(name: "profile_path")
-  // late String profilePath;
+  // @JsonKey(name:"profile_path")
+  // String? profilePath;
 
   @JsonKey(name: "cast_id")
-   int? castId;
+  @HiveField(6)
+  int? castId;
 
   @JsonKey(name: "character")
-   String? character;
+  @HiveField(7)
+  String? character;
 
   @JsonKey(name: "credit_id")
-   String? creditId;
+  @HiveField(8)
+  String? creditId;
 
   @JsonKey(name: "order")
-   int? order;
+  @HiveField(9)
+  int? order;
+
+  @JsonKey(name: "department")
+  @HiveField(10)
+  String? department;
+
+  @JsonKey(name: "job")
+  @HiveField(11)
+  String? job;
+
 
   CreditVO(
-    this.adult,
-    this.gender,
-    this.id,
-    this.knownForDepartment,
-    this.originalName,
-    this.popularity,
-    this.castId,
-    this.character,
-    this.creditId,
-    this.order,
+  this.adult,
+  this.gender,
+  this.id,
+  this.knownForDepartment,
+
+  this.originalName,
+  this.popularity,
+
+  this.castId,
+  this.character,
+  this.creditId,
+  this.order,
+  this.department,
+  this.job,
     String? name,
     String? profilePath,
   ) : super(name, profilePath);
